@@ -1,0 +1,115 @@
+<div
+  class="modal fade"
+  id="addressModal"
+  tabindex="-1"
+  aria-labelledby="addressModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addressModalLabel">Novo Endereço</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-address-form (save)="onSaveAddress($event)"></app-address-form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="deleteAddressModal"
+  tabindex="-1"
+  aria-labelledby="deleteAddressModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAddressModalLabel">
+          Excluir Endereço
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir o endereço de
+        <b>{{ addressToDelete?.user?.name }}</b
+        >?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDeleteAddress()"
+        >
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="editAddressModal"
+  tabindex="-1"
+  aria-labelledby="editAddressModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAddressModalLabel">Editar Endereço</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-address-form
+          [address]="addressToEdit"
+          (update)="onUpdateAddress($event)"
+        ></app-address-form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="mb-0">Lista de Endereços</h3>
+    <button class="btn btn-success" (click)="openCreateAddressModal()">
+      Novo Endereço
+    </button>
+  </div>
+  <app-table
+    [columns]="columns"
+    [data]="addresses"
+    [page]="page"
+    [pageSize]="pageSize"
+    [total]="total"
+    [getTypeLabel]="getTypeLabel.bind(this)"
+    (pageChange)="getAddresses($event)"
+    (edit)="onEditAddress($event)"
+    (delete)="onDeleteAddress($event)"
+  >
+  </app-table>
+  <a routerLink="/home" class="btn btn-secondary mt-3">Voltar</a>
+  <div *ngIf="!loading && !addresses.length" class="alert alert-info mt-3">
+    Nenhum endereço encontrado.
+  </div>
+</div>

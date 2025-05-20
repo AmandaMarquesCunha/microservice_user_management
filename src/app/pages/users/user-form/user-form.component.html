@@ -1,0 +1,53 @@
+<form [formGroup]="userForm" (ngSubmit)="handleSubmit()" *ngIf="userForm">
+  <div class="mb-3">
+    <label>Nome <b class="text-danger">*</b></label>
+    <input class="form-control" formControlName="name" />
+    <small
+      class="text-danger"
+      *ngIf="userForm.get('name')?.touched && !!userForm.get('name')?.errors?.['required']"
+      >O nome é obrigatório</small
+    >
+  </div>
+
+  <div class="mb-3">
+    <label>Email <b class="text-danger">*</b></label>
+    <input class="form-control" formControlName="email" />
+    <small
+      class="text-danger"
+      *ngIf="userForm.get('email')?.touched && !!userForm.get('email')?.errors?.['required']"
+      >O e-mail é obrigatório</small
+    >
+    <small
+      class="text-danger"
+      *ngIf="userForm.get('email')?.touched && !!userForm.get('email')?.errors?.['email']"
+      >E-mail inválido</small
+    >
+  </div>
+
+  <div class="mb-3" *ngIf="!userToEdit">
+    <label>Senha <b class="text-danger">*</b></label>
+    <input type="password" class="form-control" formControlName="password" />
+    <small
+      class="text-danger"
+      *ngIf="userForm.get('password')?.touched && !!userForm.get('password')?.errors?.['required']"
+      >A senha é obrigatória</small
+    >
+  </div>
+
+  <div class="mb-3" *ngIf="isEdit || (user && user.role === 'ADMIN')">
+    <label>Perfil <b class="text-danger">*</b></label>
+    <select class="form-control" formControlName="role">
+      <option value="">Selecione um perfil</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
+    <small
+      class="text-danger"
+      *ngIf="userForm.get('role')?.touched && !!userForm.get('role')?.errors?.['required']"
+      >O perfil é obrigatório</small
+    >
+  </div>
+
+  <button type="submit" class="btn btn-primary float-end">
+    {{ buttonLabel }}
+  </button>
+</form>

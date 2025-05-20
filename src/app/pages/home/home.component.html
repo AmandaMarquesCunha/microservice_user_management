@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Bem-vindo ao Painel</h2>
+  <div class="row g-4">
+    <ng-container *ngIf="user && user.role === 'ADMIN'; else userOnly">
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div
+            class="card-body d-flex flex-column align-items-center justify-content-center"
+          >
+            <i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+            <h5 class="card-title">Usuários</h5>
+            <p class="card-text text-center">
+              Gerencie todos os usuários do sistema.
+            </p>
+            <a routerLink="/users" class="btn btn-outline-primary mt-auto w-100"
+              >Ver Usuários</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div
+            class="card-body d-flex flex-column align-items-center justify-content-center"
+          >
+            <i class="bi bi-geo-alt-fill display-4 text-success mb-3"></i>
+            <h5 class="card-title">Endereços</h5>
+            <p class="card-text text-center">
+              Visualize e edite todos os endereços cadastrados.
+            </p>
+            <a
+              routerLink="/addresses"
+              class="btn btn-outline-success mt-auto w-100"
+              >Ver Endereços</a
+            >
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #userOnly></ng-template>
+    <div
+      class="col-md-4"
+      *ngIf="user && (user.role === 'ADMIN' || user.role === 'USER')"
+    >
+      <div class="card shadow-sm h-100">
+        <div
+          class="card-body d-flex flex-column align-items-center justify-content-center"
+        >
+          <i class="bi bi-person-circle display-4 text-secondary mb-3"></i>
+          <h5 class="card-title">Meus Dados</h5>
+          <p class="card-text text-center">
+            Acesse e edite seus próprios dados de perfil.
+          </p>
+          <a
+            [routerLink]="['/', user.id, 'profile']"
+            class="btn btn-outline-secondary mt-auto w-100"
+            >Meus Dados</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

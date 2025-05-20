@@ -1,0 +1,150 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Lista de Usuários</h3>
+
+    <button
+      type="button"
+      class="btn btn-primary ms-2"
+      (click)="openCreateUserModal()"
+    >
+      Novo Usuário
+    </button>
+  </div>
+  <div
+    *ngIf="loading"
+    class="d-flex justify-content-center align-items-center my-4"
+  >
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+  <app-table
+    [columns]="columns"
+    [data]="users"
+    [page]="page"
+    [pageSize]="pageSize"
+    [total]="total"
+    (pageChange)="getUsers($event)"
+    (edit)="onEditUser($event)"
+    (delete)="onDeleteUser($event)"
+  >
+  </app-table>
+  <a routerLink="/home" class="btn btn-secondary">Voltar</a>
+  <div *ngIf="!loading && !users.length" class="alert alert-info">
+    Nenhum usuário encontrado.
+  </div>
+
+  <!-- Modal de Cadastro -->
+  <div
+    class="modal fade"
+    id="userCreateModal"
+    tabindex="-1"
+    aria-labelledby="userCreateModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="userCreateModalLabel">
+            Cadastrar Usuário
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-user-form
+            [buttonLabel]="'Cadastrar'"
+            [isEdit]="false"
+            [user]="null"
+            [userToEdit]="null"
+            (submit)="createUser($event)"
+          ></app-user-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div
+    class="modal fade"
+    id="userEditModal"
+    tabindex="-1"
+    aria-labelledby="userEditModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="userEditModalLabel">
+            Editar Usuário
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-user-form
+            [buttonLabel]="'Atualizar'"
+            [isEdit]="true"
+            [user]="selectedUser"
+            [userToEdit]="selectedUser"
+            (submit)="updateUser($event)"
+          ></app-user-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação de exclusão -->
+  <div
+    class="modal fade"
+    id="deleteUserModal"
+    tabindex="-1"
+    aria-labelledby="deleteUserModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModalLabel">
+            Confirmar exclusão
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja excluir o usuário
+          <b>{{ userToDelete?.name }}</b
+          >?
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="confirmDeleteUser()"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

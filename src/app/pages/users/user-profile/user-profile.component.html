@@ -1,0 +1,146 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Dados cadastrais</h2>
+    <button class="btn btn-secondary" routerLink="/home">Voltar</button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Nome</label>
+      <output class="form-control bg-light border rounded px-2 py-1 d-block">
+        {{ user?.name }}
+      </output>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Email</label>
+      <output class="form-control bg-light border rounded px-2 py-1 d-block">
+        {{ user?.email }}
+      </output>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary me-2"
+    data-bs-toggle="modal"
+    data-bs-target="#editUserModal"
+  >
+    Atualizar
+  </button>
+</div>
+
+<!-- Modal para editar usuário -->
+<div
+  class="modal fade"
+  id="editUserModal"
+  tabindex="-1"
+  aria-labelledby="editUserModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Editar Dados</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Fechar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-user-form
+          [user]="user"
+          [buttonLabel]="'Salvar'"
+          [onSubmit]="editUser"
+          [isEdit]="true"
+          [userToEdit]="user"
+        ></app-user-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h2 class="mb-4">Endereços</h2>
+  <app-table
+    [columns]="columns"
+    [data]="addresses"
+    [page]="page"
+    [pageSize]="pageSize"
+    [total]="total"
+    [getTypeLabel]="getTypeLabel.bind(this)"
+    (pageChange)="getAddressById($event)"
+    (edit)="onEditAddress($event)"
+    (delete)="onDeleteAddress($event)"
+  ></app-table>
+</div>
+
+<div
+  class="modal fade"
+  id="editAddressModal"
+  tabindex="-1"
+  aria-labelledby="editAddressModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAddressModalLabel">Editar Endereço</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-address-form
+          [address]="addressToEdit"
+          (update)="onUpdateAddress($event)"
+        ></app-address-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteAddressModal"
+  tabindex="-1"
+  aria-labelledby="deleteAddressModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAddressModalLabel">
+          Excluir Endereço
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir o endereço de
+        <b>{{ addressToDelete?.user?.name }}</b
+        >?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDeleteAddress()"
+        >
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

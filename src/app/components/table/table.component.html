@@ -1,0 +1,64 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'type'">
+            {{ getTypeLabel ? getTypeLabel(row[col.field]) : row[col.field] }}
+          </ng-container>
+          <ng-container *ngIf="col.field !== 'type'">
+            <ng-container *ngIf="col.field !== 'actions'; else actionsCell">
+              {{ row[col.field] }}
+            </ng-container>
+          </ng-container>
+          <ng-template #actionsCell>
+            <button
+              class="btn btn-sm btn-primary me-1"
+              (click)="$event.stopPropagation(); edit.emit(row)"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="$event.stopPropagation(); delete.emit(row)"
+            >
+              Excluir
+            </button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<nav *ngIf="total > pageSize">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="page === 1">
+      <button
+        class="page-link"
+        (click)="pageChange.emit(page - 1)"
+        [disabled]="page === 1"
+      >
+        Anterior
+      </button>
+    </li>
+    <li class="page-item" *ngFor="let p of pages" [class.active]="page === p">
+      <button class="page-link" (click)="pageChange.emit(p)">
+        {{ p }}
+      </button>
+    </li>
+    <li class="page-item" [class.disabled]="page === totalPages">
+      <button
+        class="page-link"
+        (click)="pageChange.emit(page + 1)"
+        [disabled]="page === totalPages"
+      >
+        Próxima
+      </button>
+    </li>
+  </ul>
+</nav>

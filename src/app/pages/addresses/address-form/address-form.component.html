@@ -1,0 +1,117 @@
+<form [formGroup]="addressForm" (ngSubmit)="submit()">
+  <div class="mb-3">
+    <label>Usuário <b class="text-danger">*</b></label>
+    <select class="form-select" formControlName="userId">
+      <option value="" disabled selected>Selecione um usuário</option>
+      <option *ngFor="let user of users" [value]="user.id">
+        {{ user.name }} ({{ user.email }})
+      </option>
+    </select>
+    <small
+      class="text-danger"
+      *ngIf="addressForm.get('userId')?.touched && addressForm.get('userId')?.errors?.['required']"
+    >
+      O usuário é obrigatório
+    </small>
+  </div>
+
+  <div class="row align-items-end mb-3">
+    <div class="col-md-10">
+      <label>CEP <b class="text-danger">*</b></label>
+      <input class="form-control" formControlName="zipCode" maxlength="9" />
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('zipCode')?.touched && addressForm.get('zipCode')?.errors?.['required']"
+      >
+        O CEP é obrigatório
+      </small>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button
+        type="button"
+        class="btn btn-outline-primary mt-3 mt-md-0"
+        (click)="searchCep()"
+        title="Buscar CEP"
+      >
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>Logradouro <b class="text-danger">*</b></label>
+    <input class="form-control" formControlName="street" />
+    <small
+      class="text-danger"
+      *ngIf="addressForm.get('street')?.touched && addressForm.get('street')?.errors?.['required']"
+    >
+      O logradouro é obrigatório
+    </small>
+  </div>
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <label>Número <b class="text-danger">*</b></label>
+      <input class="form-control" formControlName="number" />
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('number')?.touched && addressForm.get('number')?.errors?.['required']"
+      >
+        O número é obrigatório
+      </small>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label>Complemento</label>
+      <input class="form-control" formControlName="complement" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <label>Bairro <b class="text-danger">*</b></label>
+      <input class="form-control" formControlName="neighborhood" />
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('neighborhood')?.touched && addressForm.get('neighborhood')?.errors?.['required']"
+      >
+        O bairro é obrigatório
+      </small>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label>Cidade <b class="text-danger">*</b></label>
+      <input class="form-control" formControlName="city" />
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.errors?.['required']"
+      >
+        A cidade é obrigatória
+      </small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <label>Estado <b class="text-danger">*</b></label>
+      <input class="form-control" formControlName="state" />
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.errors?.['required']"
+      >
+        O estado é obrigatório
+      </small>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label>Tipo <b class="text-danger">*</b></label>
+      <select class="form-select" formControlName="type">
+        <option value="" disabled selected>Selecione o tipo</option>
+        <option *ngFor="let type of addressTypes" [value]="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+      <small
+        class="text-danger"
+        *ngIf="addressForm.get('type')?.touched && addressForm.get('type')?.errors?.['required']"
+      >
+        O tipo é obrigatório
+      </small>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
