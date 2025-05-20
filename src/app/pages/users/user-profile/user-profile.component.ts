@@ -82,24 +82,6 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  // getAddresses(page: number = 1) {
-  //   this.loading = true;
-  //   this.addressService.getAddresses(page - 1, this.pageSize).subscribe({
-  //     next: (res: any) => {
-  //       console.log('Resposta da API de endereços:', res);
-  //       this.addresses = (res.content || []).map((addr: any) => ({
-  //         ...addr,
-  //         userName: addr.user?.name || '-',
-  //       }));
-  //       this.total = res.totalElements || 0;
-  //       this.loading = false;
-  //     },
-  //     error: () => {
-  //       this.loading = false;
-  //     },
-  //   });
-  // }
-
   onEditAddress(address: Address) {
     this.addressService.getAddressById(address.id!).subscribe({
       next: (data) => {

@@ -1,27 +1,84 @@
 # UsersAddresses
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+Sistema web para gestão de usuários e endereços, desenvolvido em Angular 15.
 
-## Development server
+## Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Autenticação de Usuário:**
+  - Login com email e senha.
+  - Cadastro de novos usuários.
+- **Gestão de Usuários (apenas para administradores):**
+  - Listagem paginada de usuários.
+  - Criação, edição e exclusão de usuários.
+  - Atribuição de perfis (ADMIN, USER).
+- **Gestão de Endereços:**
+  - Listagem paginada de endereços.
+  - Criação, edição e exclusão de endereços vinculados a usuários.
+  - Busca automática de dados pelo CEP.
+- **Perfil do Usuário:**
+  - Visualização e edição dos próprios dados.
+  - Visualização e gerenciamento dos próprios endereços.
+- **Interface Moderna:**
+  - Utilização de Bootstrap para modais e layout responsivo.
+  - Feedback visual com Toastr para notificações.
 
-## Code scaffolding
+## Requisitos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js >= 16.x
+- Angular CLI >= 15.x
+- Bootstrap 5
+- ngx-toastr
 
-## Build
+## Instalação
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone o repositório:
+   ```bash
+   git clone <repo-url>
+   cd users-addresses
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Execute o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+   Acesse `http://localhost:4200/` no navegador.
 
-## Running unit tests
+## Scripts Disponíveis
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `npm start` — Inicia o servidor de desenvolvimento.
+- `npm test` — Executa os testes unitários.
+- `ng build` — Realiza o build de produção.
 
-## Running end-to-end tests
+## Estrutura Principal
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `src/app/pages/login` — Tela de login e cadastro.
+- `src/app/pages/users` — Listagem, formulário e perfil de usuários.
+- `src/app/pages/addresses` — Listagem e formulário de endereços.
+- `src/app/components` — Componentes reutilizáveis (navbar, tabela, spinner).
+- `src/app/services` — Serviços para autenticação, usuários e endereços.
 
-## Further help
+## Configuração do ambiente
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+No arquivo `src/environments/environment.ts`, configure a URL da API local conforme o exemplo abaixo:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: "http://localhost:8080/api",
+};
+```
+
+Certifique-se de que a propriedade `apiUrl` aponte para a rota local do backend utilizada pela aplicação.
+
+## Observações
+
+- Apenas usuários autenticados podem acessar as funcionalidades.
+- Apenas administradores podem gerenciar outros usuários.
+- O sistema utiliza modais para formulários e confirmações.
+
+## Licença
+
+Este projeto é apenas para fins de estudo e demonstração.

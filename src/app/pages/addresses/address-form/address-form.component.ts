@@ -97,12 +97,10 @@ export class AddressFormComponent implements OnInit, OnChanges {
 
   submit() {
     if (this.addressForm.invalid) {
-      // Marca todos os campos como tocados para exibir mensagens
       Object.keys(this.addressForm.controls).forEach((field) => {
         const control = this.addressForm.get(field);
         control?.markAsTouched({ onlySelf: true });
       });
-      // Foca no primeiro campo inválido
       const firstInvalid = Object.keys(this.addressForm.controls).find(
         (key) => this.addressForm.get(key)?.invalid
       );

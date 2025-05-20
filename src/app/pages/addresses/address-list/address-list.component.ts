@@ -79,7 +79,6 @@ export class AddressListComponent implements OnInit {
   }
 
   onSaveAddress(address: any) {
-    // Criação de novo endereço
     const userId = address.userId || (address.user && address.user.id);
     const addressData = { ...address };
     delete addressData.userId;
@@ -100,7 +99,6 @@ export class AddressListComponent implements OnInit {
 
   onUpdateAddress(address: Address) {
     if (!this.addressToEdit) return;
-    // Atualização de endereço existente
     const updatePayload = {
       ...address,
       id: this.addressToEdit.id,
